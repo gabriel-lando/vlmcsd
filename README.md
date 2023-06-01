@@ -16,7 +16,7 @@ Now (thanks to embii74) vlmcsd process send logs to docker.
 
 ## Client
 
-- Example of valid keys can be foud [here](https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys).
+- Example of valid keys can be found [here](https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys).
 
 ### Windows
 >slmgr.vbs -upk  
