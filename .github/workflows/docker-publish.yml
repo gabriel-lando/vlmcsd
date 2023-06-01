@@ -37,20 +37,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Extract metadata from Git reference and GitHub events
-      # https://github.com/docker/metadata-action
-      - name: Docker Metadata action
-        uses: docker/metadata-action@v4.4.0
-        with:
-          flavor: |
-            latest=true
-          tags: |
-            type=schedule,pattern=nightly
-            type=semver,pattern={{version}}
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha
-
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -58,7 +44,6 @@ jobs:
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
         with:
           cosign-release: 'v1.13.1'
-
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
@@ -81,6 +66,13 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: latest=true
+          tags: |
+            type=schedule,pattern=nightly
+            type=semver,pattern={{version}}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
