@@ -31,3 +31,5 @@ steps:
       repository: $(repositoryName)
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
+      ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+        tags: 'latest'
