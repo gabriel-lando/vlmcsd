@@ -1,5 +1,5 @@
 trigger:
-- main
+  - main
 
 variables:
   - group: Agents
@@ -10,7 +10,8 @@ variables:
 
 pool:
   name: $(agent_pool)
-  vmImage: $(linux_agent)
+  demands:
+    - Agent.OS -equals Linux
 
 steps:
   - task: Docker@2
