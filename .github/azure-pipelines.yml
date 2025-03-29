@@ -1,0 +1,20 @@
+trigger:
+- main
+
+variables:
+  - group: Agents
+  - group: Credentials
+
+  - name: repositoryName
+    value: 'vlmcsd'
+
+pool:
+  vmImage: $(linux_agent)
+
+steps:
+  - task: Docker@2
+    inputs:
+      containerRegistry: '$(docker_hub_sc)'
+      repository: $(repositoryName)
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
