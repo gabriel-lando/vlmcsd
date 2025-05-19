@@ -24,6 +24,12 @@ workspace:
   clean: all
 
 steps:
+  - bash: |
+      # Remove "gabriellando/vlmcsd" and "alpine" from the list of images
+      docker image ls gabriellando/vlmcsd -q | xargs -r docker rmi
+      docker image ls alpine -q | xargs -r docker rmi
+    displayName: 'Clear Docker images before build'
+
   - task: Docker@2
     displayName: Docker Build And Push
     inputs:
@@ -35,3 +41,9 @@ steps:
         tags: 'latest'
       ${{ else }}:
         tags: 'dev'
+
+  - bash: |
+      # Remove "gabriellando/vlmcsd" and "alpine" from the list of images
+      docker image ls gabriellando/vlmcsd -q | xargs -r docker rmi
+      docker image ls alpine -q | xargs -r docker rmi
+    displayName: 'Clear Docker images after build'
